@@ -1,5 +1,5 @@
-import { MousePointer2, Trash2, Pentagon } from 'lucide-react'
 import { useAOIStore, type ActiveTool } from '../store/useAOIStore'
+import { DrawIcon, EditIcon, EraseIcon, SelectIcon, MarqueeIcon } from './custom-icons'
 
 export function DrawingTools() {
   const { activeTool, setActiveTool, setDrawing } = useAOIStore()
@@ -17,22 +17,36 @@ export function DrawingTools() {
     <div className="absolute bottom-48 right-8 flex flex-col gap-2 z-10">
       <div className="flex flex-col bg-white rounded-lg shadow-md p-1 gap-1">
         <ToolButton
-          icon={<Pentagon className="w-6 h-6" fill="currentColor" />}
+          icon={<DrawIcon className="w-6 h-6" />}
           label="Draw Polygon"
           isActive={activeTool === 'draw'}
           onClick={() => handleToolClick('draw')}
         />
         <ToolButton
-          icon={<MousePointer2 className="w-6 h-6" fill="currentColor" />}
+          icon={<EditIcon className="w-6 h-6" />}
           label="Adjust Edges"
           isActive={activeTool === 'edit'}
           onClick={() => handleToolClick('edit')}
         />
         <ToolButton
-          icon={<Trash2 className="w-6 h-6" fill="currentColor" />}
+          icon={<EraseIcon className="w-6 h-6" />}
           label="Erase Shapes"
           isActive={activeTool === 'erase'}
           onClick={() => handleToolClick('erase')}
+        />
+        <div className="h-px bg-gray-200 my-1" /> {/* Separator */}
+        <ToolButton
+          icon={<SelectIcon className="w-6 h-6" />}
+          label="Select"
+          isActive={activeTool === null}
+          onClick={() => handleToolClick(null)}
+        />
+        <ToolButton
+          icon={<MarqueeIcon className="w-6 h-6" />}
+          label="Marquee Select (Coming Soon)"
+          isActive={false}
+          onClick={() => { }}
+          disabled={true}
         />
       </div>
     </div>
@@ -52,8 +66,10 @@ function ToolButton({ icon, label, isActive, onClick, disabled }: ToolButtonProp
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center justify-center w-12 h-12 rounded-md transition-colors ${isActive ? 'text-[#e07b39]' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`flex items-center justify-center w-12 h-12 rounded-md transition-colors ${isActive
+        ? 'text-[#e07b39] bg-[#f3eadd]'
+        : 'text-[#e07b39] hover:bg-[#f3eadd]/50'
+        } ${disabled ? 'opacity-40 cursor-not-allowed' : ''}`}
       title={label}
       aria-label={label}
     >

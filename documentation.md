@@ -101,6 +101,7 @@ The application is primarily client-side but interacts with external APIs.
 ## Tradeoffs Made
 *   **Client-Side Storage:** Currently using `localStorage` (via Zustand persist) for simplicity. This means data isn't shared across devices. A backend would be needed for true persistence.
 *   **Nominatim API:** Used the free OpenStreetMap geocoder. It has rate limits and usage policies. For a production app with high traffic, a paid geocoding service (like Mapbox or Google) or a self-hosted Pelias instance would be better.
+*   **Edge Editing:** The actual edit edges features is not implemented correctly, and can differ from the actual design.
 
 ## Production Readiness
 To make this production-ready, I would:
@@ -112,6 +113,6 @@ To make this production-ready, I would:
 
 ## Time Spent
 *   **Exploration & Planning:** ~15%
-*   **Implementation (Map & UI):** ~50%
+*   **Implementation (Map & UI):** ~50% (Main time spent on implementation of drawing tools features and area of interest panel, it's hard, and can differ a bit)
 *   **State Management Integration:** ~20%
 *   **Refining & Polishing:** ~15%

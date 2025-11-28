@@ -1,5 +1,6 @@
-import { Home, LayoutGrid } from 'lucide-react'
+import { LayoutGrid } from 'lucide-react'
 import { useAOIStore } from '../store/useAOIStore'
+import { HomeIcon } from './custom-icons'
 
 export function Sidebar() {
   const { toggleLayer, layerVisible } = useAOIStore()
@@ -14,8 +15,10 @@ export function Sidebar() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M12 2L2 22L12 18V2Z" fill="#d4c3abff" />
-          <path d="M12 2L22 22L12 18V2Z" fill="#e07b39" />
+          {/* Main Arrow Body (Light) */}
+          <path d="M21.5 2.5L2.5 13L11 15.5L21.5 2.5Z" fill="#f3eadd" />
+          {/* Right Wing (Orange) */}
+          <path d="M21.5 2.5L13.5 21.5L11 15.5L21.5 2.5Z" fill="#e07b39" />
         </svg>
       </div>
 
@@ -24,14 +27,13 @@ export function Sidebar() {
           aria-label="Home"
           className="flex h-14 w-14 items-center justify-center rounded-xl text-[#e07b39] transition-transform hover:scale-110 hover:bg-white/50"
         >
-          <Home className="h-10 w-10" strokeWidth={0} fill="currentColor" />
+          <HomeIcon className="h-10 w-10" />
         </button>
         <button
           onClick={toggleLayer}
           aria-label="Toggle Layers"
-          className={`flex h-14 w-14 items-center justify-center rounded-xl transition-transform hover:scale-110 hover:bg-white/50 ${
-            layerVisible ? 'text-[#e07b39]' : 'text-[#e07b39]/50'
-          }`}
+          className={`flex h-14 w-14 items-center justify-center rounded-xl transition-transform hover:scale-110 hover:bg-white/50 ${layerVisible ? 'text-[#e07b39]' : 'text-[#e07b39]/50'
+            }`}
         >
           <LayoutGrid className="h-10 w-10" strokeWidth={0} fill="currentColor" />
         </button>
