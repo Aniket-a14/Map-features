@@ -15,9 +15,7 @@ export function Sidebar() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Main Arrow Body (Light) */}
           <path d="M21.5 2.5L2.5 13L11 15.5L21.5 2.5Z" fill="#f3eadd" />
-          {/* Right Wing (Orange) */}
           <path d="M21.5 2.5L13.5 21.5L11 15.5L21.5 2.5Z" fill="#e07b39" />
         </svg>
       </div>
@@ -41,3 +39,17 @@ export function Sidebar() {
     </div>
   )
 }
+
+/**
+ * Code Explanation:
+ * The main navigation sidebar.
+ * It contains the app logo and navigation buttons (Home, Layer Toggle).
+ *
+ * What is Happening:
+ * - Renders the logo SVG.
+ * - Provides a button to toggle between map layers (OSM/WMS).
+ *
+ * What to do Next:
+ * - Add more navigation items as the app grows.
+ * - Implement active state styling for navigation items.
+ */

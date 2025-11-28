@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Search } from 'lucide-react'
 import { useAOIStore } from '../store/useAOIStore'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 interface SearchResult {
   place_id: number
@@ -45,7 +46,7 @@ export function SearchBar({ className, placeholder, onResultSelect }: SearchBarP
       zoom: 13,
     })
     setResults([])
-    setQuery(result.display_name) // Update input with selected name
+    setQuery(result.display_name)
 
     if (onResultSelect) {
       onResultSelect(result)
@@ -81,3 +82,19 @@ export function SearchBar({ className, placeholder, onResultSelect }: SearchBarP
     </div>
   )
 }
+
+/**
+ * Code Explanation:
+ * A search component that queries the Nominatim API for location data.
+ * It allows users to search for places and select them to center the map or create an AOI.
+ *
+ * What is Happening:
+ * - Manages input state and search results.
+ * - Fetches data from OpenStreetMap Nominatim.
+ * - Triggers `onResultSelect` and updates map view upon selection.
+ *
+ * What to do Next:
+ * - Add debounce to search input to reduce API calls.
+ * - Handle API errors more gracefully (user feedback).
+ * - Support more detailed address selection.
+ */

@@ -129,3 +129,17 @@ export const HomeIcon = ({ className }: { className?: string }) => (
         />
     </svg>
 )
+
+/**
+ * Code Explanation:
+ * Exports a set of custom SVG icon components used throughout the application.
+ * Icons include Draw, Edit, Erase, Select, Marquee, and Home.
+ *
+ * What is Happening:
+ * - Each component returns an SVG element with specific paths and styles.
+ * - Accepts a `className` prop for styling customization.
+ *
+ * What to do Next:
+ * - Add more icons as needed.
+ * - Consider using an icon library if the number of custom icons grows significantly.
+ */

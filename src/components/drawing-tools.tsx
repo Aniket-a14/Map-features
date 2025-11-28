@@ -34,7 +34,7 @@ export function DrawingTools() {
           isActive={activeTool === 'erase'}
           onClick={() => handleToolClick('erase')}
         />
-        <div className="h-px bg-gray-200 my-1" /> {/* Separator */}
+        <div className="h-px bg-gray-200 my-1" />
         <ToolButton
           icon={<SelectIcon className="w-6 h-6" />}
           label="Select"
@@ -77,3 +77,17 @@ function ToolButton({ icon, label, isActive, onClick, disabled }: ToolButtonProp
     </button>
   )
 }
+
+/**
+ * Code Explanation:
+ * Provides a toolbar with drawing tools (Draw, Edit, Erase, Select).
+ * It renders a set of buttons that toggle the active tool in the global store.
+ *
+ * What is Happening:
+ * - Uses `useAOIStore` to track and update `activeTool` and `isDrawing` state.
+ * - Renders buttons with icons for each tool.
+ *
+ * What to do Next:
+ * - Implement "Marquee Select" functionality.
+ * - Add tooltips or keyboard shortcuts.
+ */

@@ -3,7 +3,6 @@ import { Sidebar } from '../components/sidebar'
 import { useAOIStore } from '../store/useAOIStore'
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
-// Mock the store
 vi.mock('../store/useAOIStore', () => ({
   useAOIStore: vi.fn(),
 }))
@@ -13,11 +12,10 @@ describe('Sidebar', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    // Default mock implementation
-    ;(useAOIStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      layerVisible: false,
-      toggleLayer: toggleLayerMock,
-    })
+      ; (useAOIStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+        layerVisible: false,
+        toggleLayer: toggleLayerMock,
+      })
   })
 
   it('renders correctly', () => {
@@ -34,14 +32,29 @@ describe('Sidebar', () => {
   })
 
   it('shows active state when layer is visible', () => {
-    ;(useAOIStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    ; (useAOIStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       layerVisible: true,
       toggleLayer: toggleLayerMock,
     })
 
     render(<Sidebar />)
     const toggleButton = screen.getByLabelText('Toggle Layers')
-    // Check for the active class or color (simplified check)
     expect(toggleButton).toHaveClass('text-[#e07b39]')
   })
 })
+
+/**
+ * Code Explanation:
+ * Unit tests for the Sidebar component.
+ * Verifies that the sidebar renders correctly and interactions (like clicking buttons) work as expected.
+ *
+ * What is Happening:
+ * - Uses `vitest` and `@testing-library/react` for testing.
+ * - Mocks `useAOIStore` to isolate component behavior.
+ * - Tests rendering of logo and buttons.
+ * - Tests layer toggle functionality.
+ *
+ * What to do Next:
+ * - Add more tests for navigation interactions.
+ * - Test accessibility (aria-labels, keyboard navigation).
+ */

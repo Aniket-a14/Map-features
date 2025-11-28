@@ -4,7 +4,8 @@ import { persist } from 'zustand/middleware'
 export interface AOI {
   id: string
   name: string
-  geometry: any // GeoJSON Polygon
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  geometry: any
   createdAt: string
 }
 
@@ -16,12 +17,13 @@ interface AOIState {
   selectedAoiId: string | null
   isDrawing: boolean
   layerVisible: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pendingAoi: { id: string; geometry: any } | null
   flyToLocation: { center: [number, number]; zoom: number } | null
 
-  // New State for AOI Flow
   viewMode: ViewMode
-  tempGeometry: any | null // For search results (dotted outline)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tempGeometry: any | null
   activeTool: ActiveTool
 
   addAoi: (aoi: AOI) => void
@@ -30,11 +32,12 @@ interface AOIState {
   selectAoi: (id: string | null) => void
   setDrawing: (isDrawing: boolean) => void
   toggleLayer: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setPendingAoi: (aoi: { id: string; geometry: any } | null) => void
   setFlyToLocation: (location: { center: [number, number]; zoom: number } | null) => void
 
-  // New Actions
   setViewMode: (mode: ViewMode) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setTempGeometry: (geometry: any | null) => void
   setActiveTool: (tool: ActiveTool) => void
 }
@@ -75,7 +78,24 @@ export const useAOIStore = create<AOIState>()(
     }),
     {
       name: 'aoi-storage',
-      partialize: (state) => ({ aois: state.aois }), // Persist aois
+      partialize: (state) => ({ aois: state.aois }),
     }
   )
 )
+
+/**
+ * Code Explanation:
+ * Global state management store using Zustand.
+ * It manages the state for AOIs (Areas of Interest), drawing tools, view modes, and map interactions.
+ *
+ * What is Happening:
+ * - Defines the `AOIStore` interface and initial state.
+ * - Provides actions to add, remove, update, and select AOIs.
+ * - Manages UI state like `viewMode`, `activeTool`, and `layerVisible`.
+ * - Persists AOIs to `localStorage` (via `persist` middleware).
+ *
+ * What to do Next:
+ * - Add more robust validation for AOI data.
+ * - Implement undo/redo functionality for drawing actions.
+ * - Split store into smaller slices if it grows too large.
+ */

@@ -36,7 +36,6 @@ export function AreaOfInterestPanel() {
     objects: false,
   })
 
-  // Handlers
   const toggleSection = (section: keyof typeof sections) => {
     setSections((prev) => ({ ...prev, [section]: !prev[section] }))
   }
@@ -52,11 +51,10 @@ export function AreaOfInterestPanel() {
     removeAoi(id)
   }
 
-  const handleSearchResult = (result: any) => {
-    setSearchResultName(result.display_name.split(',')[0]) // Use first part of name
+  const handleSearchResult = (result: { display_name: string; lat: string; lon: string }) => {
+    setSearchResultName(result.display_name.split(',')[0])
     setViewMode('search_result')
 
-    // Mock geometry around the result
     const lat = parseFloat(result.lat)
     const lon = parseFloat(result.lon)
     const delta = 0.05
@@ -77,7 +75,6 @@ export function AreaOfInterestPanel() {
   }
 
   const handleApply = () => {
-    // Convert temp geometry to confirmed AOI
     if (tempGeometry && searchResultName) {
       const newAoi = {
         id: crypto.randomUUID(),
@@ -95,12 +92,10 @@ export function AreaOfInterestPanel() {
     setViewMode('list')
   }
 
-  // Render Content based on ViewMode
   const renderContent = () => {
     if (viewMode === 'list') {
       return (
         <div className="flex-1 overflow-y-auto mt-2">
-          {/* Select Base Image Section */}
           <div className="border-b border-gray-200 py-3">
             <button
               onClick={() => toggleSection('baseImage')}
@@ -118,7 +113,6 @@ export function AreaOfInterestPanel() {
             </button>
           </div>
 
-          {/* Define Area of Interest Section */}
           <div className="border-b border-gray-200 py-3">
             <button
               onClick={() => toggleSection('aoi')}
@@ -152,7 +146,6 @@ export function AreaOfInterestPanel() {
                     className={`group flex items-center justify-between py-2 px-2 rounded-md cursor-pointer hover:bg-gray-50 ${selectedAoiId === aoi.id ? 'bg-gray-50' : ''}`}
                   >
                     <div className="flex items-center gap-3">
-                      {/* Color Box */}
                       {index === 0 ? (
                         <ChevronRight className="h-4 w-4 text-gray-400" />
                       ) : (
@@ -184,7 +177,6 @@ export function AreaOfInterestPanel() {
             )}
           </div>
 
-          {/* Define Objects Section */}
           <div className="border-b border-gray-200 py-3">
             <button
               onClick={() => toggleSection('objects')}
@@ -221,8 +213,8 @@ export function AreaOfInterestPanel() {
             onClick={handleApply}
             disabled={viewMode !== 'search_result'}
             className={`w-full rounded-lg py-3 px-4 text-[16px] font-medium transition-all mb-2 ${viewMode === 'search_result'
-                ? 'bg-[#c17f59] text-white hover:bg-[#a86b47] shadow-sm'
-                : 'bg-[#e5ddd3] text-gray-400 cursor-not-allowed'
+              ? 'bg-[#c17f59] text-white hover:bg-[#a86b47] shadow-sm'
+              : 'bg-[#e5ddd3] text-gray-400 cursor-not-allowed'
               }`}
           >
             Apply outline as base image
@@ -235,7 +227,6 @@ export function AreaOfInterestPanel() {
       )
     }
 
-    // Initial View
     return (
       <>
         <div className="mb-6">
@@ -297,11 +288,8 @@ export function AreaOfInterestPanel() {
     }
   }
 
-  // ... (rest of renderContent)
-
   return (
     <div className="flex h-full w-[320px] flex-col bg-[#faf8f5] px-5 py-5 relative">
-      {/* ... (Header) ... */}
       <div className="mb-5 flex items-center gap-2.5">
         <button
           aria-label="Back"
@@ -316,7 +304,6 @@ export function AreaOfInterestPanel() {
 
       {renderContent()}
 
-      {/* Save AOI Modal / Overlay */}
       {pendingAoi && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
           <div className="w-[90%] rounded-xl bg-white p-4 shadow-xl border border-[#d4a574]">
@@ -334,8 +321,6 @@ export function AreaOfInterestPanel() {
                 onClick={() => {
                   setPendingAoi(null)
                   setAoiName('')
-                  // Optionally remove from map if cancelled?
-                  // For now, just cancel the save flow.
                 }}
                 className="flex-1 rounded-lg bg-gray-100 py-2 text-gray-600 hover:bg-gray-200"
               >
@@ -353,15 +338,14 @@ export function AreaOfInterestPanel() {
         </div>
       )}
 
-      {/* Footer Button */}
       {(viewMode === 'search_input' || viewMode === 'search_result') && (
         <div className="mt-auto pt-4">
           <button
             onClick={handleConfirm}
             disabled={viewMode !== 'search_result'}
             className={`w-full rounded-lg py-3 px-4 text-[16px] font-medium transition-all ${viewMode === 'search_result'
-                ? 'bg-[#d4d4d4] text-gray-700 hover:bg-[#c0c0c0]'
-                : 'bg-[#e5e5e5] text-gray-400 cursor-not-allowed'
+              ? 'bg-[#d4d4d4] text-gray-700 hover:bg-[#c0c0c0]'
+              : 'bg-[#e5e5e5] text-gray-400 cursor-not-allowed'
               } ${viewMode === 'search_result' && tempGeometry === null ? 'bg-[#c17f59] text-white' : ''}`}
           >
             Confirm Area of Interest
@@ -371,3 +355,20 @@ export function AreaOfInterestPanel() {
     </div>
   )
 }
+
+/**
+ * Code Explanation:
+ * Manages the "Area of Interest" panel where users can define, view, and manage their areas.
+ * It supports listing AOIs, searching for locations to create AOIs, and initiating drawing mode.
+ *
+ * What is Happening:
+ * - Uses `useAOIStore` for state management (AOIs, view mode, drawing state).
+ * - Renders different views based on `viewMode` ('list', 'search_input', 'search_result', 'drawing').
+ * - Handles search results and temporary geometry creation.
+ * - Allows saving and deleting AOIs.
+ *
+ * What to do Next:
+ * - Implement "Define Objects" section.
+ * - Improve "Upload shape file" functionality.
+ * - Refactor large render methods into smaller sub-components.
+ */
