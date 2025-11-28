@@ -152,6 +152,40 @@ export function MapView() {
         map.current.on('draw.create', onDrawCreate)
         map.current.on('draw.update', onDrawUpdate)
         map.current.on('draw.delete', onDrawDelete)
+
+        map.current.on('styledata', () => {
+          const { layerVisible } = useAOIStore.getState()
+          const wmsLayer = map.current?.getLayer('nrw-wms-layer')
+          const osmLayer = map.current?.getLayer('osm-layer')
+
+          if (wmsLayer && osmLayer) {
+            if (layerVisible) {
+              if (map.current?.getLayoutProperty('nrw-wms-layer', 'visibility') !== 'visible') {
+                map.current?.setLayoutProperty('nrw-wms-layer', 'visibility', 'visible')
+              }
+              if (map.current?.getLayoutProperty('osm-layer', 'visibility') !== 'none') {
+                map.current?.setLayoutProperty('osm-layer', 'visibility', 'none')
+              }
+            } else {
+              if (map.current?.getLayoutProperty('nrw-wms-layer', 'visibility') !== 'none') {
+                map.current?.setLayoutProperty('nrw-wms-layer', 'visibility', 'none')
+              }
+              if (map.current?.getLayoutProperty('osm-layer', 'visibility') !== 'visible') {
+                map.current?.setLayoutProperty('osm-layer', 'visibility', 'visible')
+              }
+            }
+          }
+        })
+
+        // Apply initial visibility state immediately
+        const { layerVisible } = useAOIStore.getState()
+        if (layerVisible) {
+          map.current.setLayoutProperty('nrw-wms-layer', 'visibility', 'visible')
+          map.current.setLayoutProperty('osm-layer', 'visibility', 'none')
+        } else {
+          map.current.setLayoutProperty('nrw-wms-layer', 'visibility', 'none')
+          map.current.setLayoutProperty('osm-layer', 'visibility', 'visible')
+        }
       })
     } catch (e) {
       console.error('Map initialization failed', e)
@@ -160,6 +194,13 @@ export function MapView() {
     return () => {
       map.current?.remove()
       map.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    // Reset layer visibility on mount if in initial mode
+    if (useAOIStore.getState().viewMode === 'initial') {
+      useAOIStore.getState().setLayerVisible(false)
     }
   }, [])
 
@@ -180,13 +221,7 @@ export function MapView() {
     }
   }, [layerVisible])
 
-  useEffect(() => {
-    if (viewMode === 'search_result' || activeTool === 'draw') {
-      if (!layerVisible) {
-        useAOIStore.getState().toggleLayer()
-      }
-    }
-  }, [viewMode, activeTool, layerVisible])
+
 
   useEffect(() => {
     if (!map.current) return

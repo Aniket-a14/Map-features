@@ -27,6 +27,7 @@ export function AreaOfInterestPanel() {
     setActiveTool,
     pendingAoi,
     setPendingAoi,
+    setLayerVisible,
   } = useAOIStore()
 
   const [searchResultName, setSearchResultName] = useState('')
@@ -54,6 +55,7 @@ export function AreaOfInterestPanel() {
   const handleSearchResult = (result: { display_name: string; lat: string; lon: string }) => {
     setSearchResultName(result.display_name.split(',')[0])
     setViewMode('search_result')
+    setLayerVisible(true)
 
     const lat = parseFloat(result.lat)
     const lon = parseFloat(result.lon)
@@ -85,6 +87,7 @@ export function AreaOfInterestPanel() {
       addAoi(newAoi)
       setTempGeometry(null)
       setViewMode('list')
+      useAOIStore.getState().setLayerVisible(true)
     }
   }
 
@@ -293,7 +296,9 @@ export function AreaOfInterestPanel() {
       <div className="mb-5 flex items-center gap-2.5">
         <button
           aria-label="Back"
-          onClick={() => setViewMode('initial')}
+          onClick={() => {
+            setViewMode('initial')
+          }}
           className="flex h-12 w-12 items-center justify-center rounded text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
         >
           <ChevronLeft className="h-9 w-9" strokeWidth={1.5} />

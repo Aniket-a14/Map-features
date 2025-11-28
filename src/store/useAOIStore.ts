@@ -32,6 +32,7 @@ interface AOIState {
   selectAoi: (id: string | null) => void
   setDrawing: (isDrawing: boolean) => void
   toggleLayer: () => void
+  setLayerVisible: (visible: boolean) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setPendingAoi: (aoi: { id: string; geometry: any } | null) => void
   setFlyToLocation: (location: { center: [number, number]; zoom: number } | null) => void
@@ -69,6 +70,7 @@ export const useAOIStore = create<AOIState>()(
       selectAoi: (id) => set({ selectedAoiId: id }),
       setDrawing: (isDrawing) => set({ isDrawing }),
       toggleLayer: () => set((state) => ({ layerVisible: !state.layerVisible })),
+      setLayerVisible: (visible) => set({ layerVisible: visible }),
       setPendingAoi: (pendingAoi) => set({ pendingAoi }),
       setFlyToLocation: (location) => set({ flyToLocation: location }),
 
