@@ -1,33 +1,39 @@
-import { Home, Layers } from "lucide-react"
-import { useAOIStore } from "../store/useAOIStore"
+import { Home, LayoutGrid } from 'lucide-react'
+import { useAOIStore } from '../store/useAOIStore'
 
 export function Sidebar() {
   const { toggleLayer, layerVisible } = useAOIStore()
 
   return (
-    <div className="flex h-full w-[60px] flex-col items-center bg-[#f5ebe0] pt-4">
-      <div className="mb-6">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 2L34 18L18 34L2 18L18 2Z" fill="#d4a574" opacity="0.25" />
-          <path d="M18 7L29 18L18 29L7 18L18 7Z" fill="#d4a574" opacity="0.45" />
-          <path d="M18 12L24 18L18 24L12 18L18 12Z" fill="#e07b39" />
+    <div className="flex h-full w-[80px] flex-col items-center bg-transparent pt-8">
+      <div className="mb-8">
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M12 2L2 22L12 18V2Z" fill="#d4c3abff" />
+          <path d="M12 2L22 22L12 18V2Z" fill="#e07b39" />
         </svg>
       </div>
 
-      <nav className="flex flex-col items-center gap-2">
+      <nav className="flex flex-col items-center gap-6">
         <button
           aria-label="Home"
-          className="flex h-10 w-10 items-center justify-center rounded-md text-[#c9a87c] transition-colors hover:bg-[#ede0d4] hover:text-[#b8956a]"
+          className="flex h-14 w-14 items-center justify-center rounded-xl text-[#e07b39] transition-transform hover:scale-110 hover:bg-white/50"
         >
-          <Home className="h-5 w-5" strokeWidth={1.5} />
+          <Home className="h-10 w-10" strokeWidth={0} fill="currentColor" />
         </button>
         <button
           onClick={toggleLayer}
           aria-label="Toggle Layers"
-          className={`flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-[#ede0d4] hover:text-[#b8956a] ${layerVisible ? "bg-[#ede0d4] text-[#b8956a]" : "text-[#c9a87c]"
-            }`}
+          className={`flex h-14 w-14 items-center justify-center rounded-xl transition-transform hover:scale-110 hover:bg-white/50 ${
+            layerVisible ? 'text-[#e07b39]' : 'text-[#e07b39]/50'
+          }`}
         >
-          <Layers className="h-5 w-5" strokeWidth={1.5} />
+          <LayoutGrid className="h-10 w-10" strokeWidth={0} fill="currentColor" />
         </button>
       </nav>
     </div>
